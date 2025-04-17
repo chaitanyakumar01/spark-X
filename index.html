@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DecentralVote | Secure Voting</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="index.css" />
+  <script src="auth.js" defer></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">
+        <i class="fas fa-vote-yea"></i>
+        <h1>Decentral<span>Vote</span></h1>
+      </div>
+      <nav class="nav-buttons">
+        <span id="userWallet" class="wallet-info"></span>
+        <button class="wallet-btn"><i class="fas fa-wallet"></i> Connect Wallet</button>
+        <button class="about-btn" onclick="openModal()"><i class="fas fa-info-circle"></i> About</button>
+        <a href="logout.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <h2 class="section-title">Active Polls</h2>
+    <div class="polls-grid">
+
+      <!-- Poll 1 -->
+      <div class="poll-card" data-poll-id="poll1">
+        <h3 class="poll-question">Which feature should we build next?</h3>
+        <form class="poll-options">
+          <label><input type="radio" name="poll1" value="A"> Dark Mode</label>
+          <label><input type="radio" name="poll1" value="B"> Mobile App</label>
+          <label><input type="radio" name="poll1" value="C"> Token Rewards</label>
+        </form>
+        <button class="vote-btn" onclick="submitVote('poll1')">Vote</button>
+        <div class="poll-results"></div>
+      </div>
+
+      <!-- Poll 2 -->
+      <div class="poll-card" data-poll-id="poll2">
+        <h3 class="poll-question">What should be the community focus?</h3>
+        <form class="poll-options">
+          <label><input type="radio" name="poll2" value="A"> Education</label>
+          <label><input type="radio" name="poll2" value="B"> Sustainability</label>
+          <label><input type="radio" name="poll2" value="C"> Innovation</label>
+          <label><input type="radio" name="poll2" value="D"> Governance</label>
+        </form>
+        <button class="vote-btn" onclick="submitVote('poll2')">Vote</button>
+        <div class="poll-results"></div>
+      </div>
+
+      <!-- Poll 3 -->
+      <div class="poll-card" data-poll-id="poll3">
+        <h3 class="poll-question">Should we organize a community meetup?</h3>
+        <form class="poll-options">
+          <label><input type="radio" name="poll3" value="A"> Yes, definitely!</label>
+          <label><input type="radio" name="poll3" value="B"> Maybe online</label>
+          <label><input type="radio" name="poll3" value="C"> Not needed</label>
+        </form>
+        <button class="vote-btn" onclick="submitVote('poll3')">Vote</button>
+        <div class="poll-results"></div>
+      </div>
+
+      <!-- Poll 4 -->
+      <div class="poll-card" data-poll-id="poll4">
+        <h3 class="poll-question">What type of content should we focus on?</h3>
+        <form class="poll-options">
+          <label><input type="radio" name="poll4" value="A"> Tutorials</label>
+          <label><input type="radio" name="poll4" value="B"> Industry News</label>
+          <label><input type="radio" name="poll4" value="C"> Developer Spotlights</label>
+          <label><input type="radio" name="poll4" value="D"> Podcasts</label>
+        </form>
+        <button class="vote-btn" onclick="submitVote('poll4')">Vote</button>
+        <div class="poll-results"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="teamModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Meet the Team 👨‍💻👩‍💻</h2>
+      <div class="team-cards">
+        <div class="team-card">
+          <img src="toto.png" alt="Member 1" />
+          <h3>Chaitanya Kumar</h3>
+          <p>Frontend Developer</p>
+        </div>
+        <div class="team-card">
+          <img src="rininja.jpg" alt="Member 2" />
+          <h3>Pranjal Garg</h3>
+          <p>Blockchain Engineer</p>
+        </div>
+        <div class="team-card">
+          <img src="lucario.jpeg" alt="Member 3" />
+          <h3>Aayush</h3>
+          <p>Backend Developer</p>
+        </div>
+        <div class="team-card">
+          <img src="snorlax.avif" alt="Member 4" />
+          <h3>Aditya Maheshwari</h3>
+          <p>UI/UX Designer</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      document.querySelectorAll(".poll-card").forEach(card => {
+        const pollId = card.getAttribute("data-poll-id");
+        if (!card.querySelector(".poll-results")) {
+          const resultsDiv = document.createElement("div");
+          resultsDiv.className = "poll-results";
+          card.appendChild(resultsDiv);
+        }
+        if (localStorage.getItem(`vote_${pollId}`)) {
+          showResults(pollId);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
